@@ -8,21 +8,38 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    env:
+      REGISTRY: ${{ secrets.DOCKER_URL }}/pyazuredemo1
     steps:
-      - name: Configure Docker credentials
+      - name: "Checkout code"
+        id: checkout
+        uses: actions/checkout@v1
+
+      - name: "Login via Azure CLI"
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Configure ACR credentials"
         uses: azure/docker-login@v1
         with:
           login-server: ${{ secrets.DOCKER_URL }}
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
-        
-      - name: Checkout code
-        id: checkout
-        uses: actions/checkout@v1
 
-      - name: Build, tag, and push image to Azure Container Registry
+      - name: "Build, tag, and push image to ACR"
         id: build-image
         run: |
-          docker build . -t ${{ secrets.DOCKER_URL }}/pyazuredemo1:${{ github.sha }}
-          docker push ${{ secrets.DOCKER_URL }}/pyazuredemo1:${{ github.sha }}
+          docker build . -t ${{ env.REGISTRY }}:${{ github.sha }} -t ${{ env.REGISTRY}}:production
+          docker push ${{ env.REGISTRY }}:${{ github.sha }}
 
+      - name: 'Deploy to Azure Container Instances'
+        uses: 'azure/aci-deploy@v1'
+        with:
+          resource-group: copado-demo
+          dns-name-label: url-for-container
+          image: ${{ env.REGISTRY }}:${{ github.sha }}
+          registry-username: ${{ secrets.ACR_USERNAME }}
+          registry-password: ${{ secrets.ACR_PASSWORD }}
+          name: py-azure-demo
+          location: 'east us'
