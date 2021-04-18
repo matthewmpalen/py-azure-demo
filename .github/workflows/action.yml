@@ -15,9 +15,7 @@ jobs:
           login-server: ${{ secrets.DOCKER_URL }}
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
-        env:
-          REGISTRY: ${{ secrets.DOCKER_URL }}/PyAzureDemo
       - run: |
-          docker build . -t $REGISTRY:${{ github.sha }}
-          docker push $REGISTRY:${{ github.sha }}
+          docker build . -t ${{ secrets.DOCKER_URL }}/PyAzureDemo:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_URL }}/PyAzureDemo:${{ github.sha }}
 
