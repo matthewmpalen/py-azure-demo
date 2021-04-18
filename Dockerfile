@@ -6,6 +6,6 @@ ADD . /app
 WORKDIR /app
 
 RUN pip install pipenv
-RUN pipenv install
+RUN pipenv install --system
 
-ENTRYPOINT ["./start/sh"]
+ENTRYPOINT ["./start.sh"]
