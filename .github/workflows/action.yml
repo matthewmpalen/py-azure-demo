@@ -15,12 +15,14 @@ jobs:
           login-server: ${{ secrets.DOCKER_URL }}
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
+        
       - name: Checkout code
-          id: checkout
-          uses: actions/checkout@v1
+        id: checkout
+        uses: actions/checkout@v1
+
       - name: Build, tag, and push image to Azure Container Registry
-          id: build-image
-          run: |
-            docker build . -t ${{ secrets.DOCKER_URL }}/pyazuredemo1:${{ github.sha }}
-            docker push ${{ secrets.DOCKER_URL }}/pyazuredemo1:${{ github.sha }}
+        id: build-image
+        run: |
+          docker build . -t ${{ secrets.DOCKER_URL }}/pyazuredemo1:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_URL }}/pyazuredemo1:${{ github.sha }}
 
