@@ -8,4 +8,4 @@ WORKDIR /app
 RUN pip install pipenv
 RUN pipenv install --system
 
-ENTRYPOINT ["./start.sh"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]

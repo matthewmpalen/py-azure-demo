@@ -41,5 +41,6 @@ jobs:
           image: ${{ env.REGISTRY }}:${{ github.sha }}
           registry-username: ${{ secrets.ACR_USERNAME }}
           registry-password: ${{ secrets.ACR_PASSWORD }}
+          registry-login-server: ${{ secrets.DOCKER_URL }}
           name: py-azure-demo
           location: 'east us'
