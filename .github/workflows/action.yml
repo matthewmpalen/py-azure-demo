@@ -1,0 +1,18 @@
+name: Master
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure Docker credentials
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.DOCKER_URL }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
