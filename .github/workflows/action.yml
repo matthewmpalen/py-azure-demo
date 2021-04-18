@@ -37,7 +37,7 @@ jobs:
         uses: 'azure/aci-deploy@v1'
         with:
           resource-group: copado-demo
-          dns-name-label: py-azure-demo.eastus.azurecontainer.io
+          dns-name-label: py-azure-demo
           image: ${{ env.REGISTRY }}:${{ github.sha }}
           registry-username: ${{ secrets.ACR_USERNAME }}
           registry-password: ${{ secrets.ACR_PASSWORD }}
