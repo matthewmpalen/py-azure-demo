@@ -16,6 +16,6 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
       - run: |
-          docker build . -t ${{ secrets.DOCKER_URL }}/PyAzureDemo:${{ github.sha }}
-          docker push ${{ secrets.DOCKER_URL }}/PyAzureDemo:${{ github.sha }}
+          docker build . -t ${{ secrets.DOCKER_URL }}/pyazuredemo1:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_URL }}/pyazuredemo1:${{ github.sha }}
 
