@@ -44,3 +44,5 @@ jobs:
           registry-login-server: ${{ secrets.DOCKER_URL }}
           name: py-azure-demo
           location: 'east us'
+          cpu: 1
+          memory: 0.5
